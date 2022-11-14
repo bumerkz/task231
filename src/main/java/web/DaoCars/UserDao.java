@@ -18,4 +18,8 @@ public class UserDao {
         return users;
     }
 
+    public void save(User user) {
+        user.setId(++USER_COUNT);
+        users.add(user);
+    }
 }
