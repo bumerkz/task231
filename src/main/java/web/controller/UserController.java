@@ -2,10 +2,7 @@ package web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import web.DaoCars.UserDao;
 import web.model.User;
 //@RequestMapping("/users")
@@ -30,6 +27,16 @@ public class UserController {
     @PostMapping("/users")
     public String create(@ModelAttribute("users") User user) {
         userDao.save(user);
+        return "redirect:/users";
+    }
+    @GetMapping("{id}/edit")
+    public String edit (Model model, @PathVariable("id") int id) {
+        model.addAttribute("users", userDao.show(id));
+        return "edit";
+    }
+    @PatchMapping("{id}")
+    public String update (@ModelAttribute("users") User user, @PathVariable("id") int id) {
+        userDao.update(id, user);
         return "redirect:/users";
     }
 }
