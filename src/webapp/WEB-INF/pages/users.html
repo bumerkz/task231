@@ -8,25 +8,32 @@
 
 <div>
     <h2>Все пользователи:</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Номер</th>
-            <th>Name</th>
-            <th>Фамилия</th>
-            <th>BYear/Год рождения</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.id}"></td>
-            <td th:text="${user.name}"></td>
-            <td th:text="${user.lastName}"></td>
-            <td th:text="${user.bYear}"></td>
 
-        </tr>
-        </tbody>
-    </table>
+    <div th:each="users : ${users}">
+        <a th:href="@{{id}(id=${users.getId()})}" th:text="${users.getName()}">user</a>
+    </div>
+<!--    <table>-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>Номер</th>-->
+<!--            <th>Name</th>-->
+<!--            <th>Фамилия</th>-->
+<!--            <th>BYear/Год рождения</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="user : ${users}">-->
+<!--            <td th:text="${user.id}"></td>-->
+<!--            <td th:text="${user.name}"></td>-->
+<!--            <td th:text="${user.lastName}"></td>-->
+<!--            <td th:text="${user.bYear}"></td>-->
+
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
 </div>
+<br/>
+<hr/>
+<a href="/new">Create new user</a>
 </body>
 </html>

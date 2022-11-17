@@ -41,4 +41,8 @@ public class UserDao {
         userToBeUpdated.setLastName(updatedUser.getLastName());
         userToBeUpdated.setbYear(updatedUser.getbYear());
     }
+    public void delete(int id) {
+        users.removeIf(u->u.getId()==id);
+    }
+
 }

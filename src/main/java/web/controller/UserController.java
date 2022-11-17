@@ -1,7 +1,9 @@
 package web.controller;
 
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import web.DaoCars.UserDao;
 import web.model.User;
@@ -25,7 +27,11 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public String create(@ModelAttribute("users") User user) {
+    public String create(@ModelAttribute("users") @Valid User user,
+                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "new";
+        }
         userDao.save(user);
         return "redirect:/users";
     }
@@ -34,9 +40,25 @@ public class UserController {
         model.addAttribute("users", userDao.show(id));
         return "edit";
     }
-    @PatchMapping("{id}")
-    public String update (@ModelAttribute("users") User user, @PathVariable("id") int id) {
+    @PatchMapping("users/{id}")
+    public String update (@ModelAttribute("users") @Valid User user, BindingResult bindingResult,
+                          @PathVariable("id") int id) {
+        if (bindingResult.hasErrors()) {
+            return "edit";
+        }
         userDao.update(id, user);
         return "redirect:/users";
     }
+    @GetMapping("{id}")
+    public String show(@PathVariable("id") int id, Model model) {
+        model.addAttribute("users", userDao.show(id));
+        return "show";
+    }
+
+    @DeleteMapping("{id}")
+    public String delete(@PathVariable("id") int id) {
+        userDao.delete(id);
+        return "redirect:/users";
+    }
+
 }

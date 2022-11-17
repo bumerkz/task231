@@ -1,9 +1,21 @@
 package web.model;
 
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+
 public class User {
     private int id;
+
+    @NotEmpty(message = "Name shoud not be empty")
+    @Size(min = 2, max = 30, message = "Name Error")
     private String name;
+    @NotEmpty(message = "LastName shoud not be empty")
+    @Size(min = 2, max = 30, message = "LastName Error")
     private String lastName;
+    @Min(value = 0, message = "Year Error")
     private int bYear;
 
     public User() {
