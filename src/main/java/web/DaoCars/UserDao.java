@@ -3,12 +3,10 @@ package web.DaoCars;
 
 import org.springframework.stereotype.Component;
 import web.model.User;
-
 import java.sql.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.sql.Connection;
 import java.util.List;
 
 @Component
@@ -21,19 +19,17 @@ public class UserDao {
     private static Connection connection;
 
     static {
-//        try {
-//            Class.forName("com.mysql.jdbc.Drive");
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
-
-
     public List<User> index() {
         List<User> users = new ArrayList<>();
 
@@ -67,6 +63,15 @@ public class UserDao {
     public void save(User user) {
 //        user.setId(++USER_COUNT);
 //        users.add(user);
+        try {
+            Statement statement = connection.createStatement();
+            String SQL = "INSERT INTO users VALUES(" + 1 + ",'" + user.getName() +
+                    "'," + user.getLastName() + ",'" + user.getbYear() + "')";
+
+            statement.executeUpdate(SQL);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void update(int id, User updatedUser) {
