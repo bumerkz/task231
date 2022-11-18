@@ -54,31 +54,51 @@ public class UserDao {
     }
 
     public User show(int id) {
-//        return users.stream()
-//                .filter(user -> user.getId() == id)
-//                .findAny()
-//                .orElse(null);
-        return null;
+        User user = null;
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("SELECT * FROM users WHERE id = ?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            user = new User();
+
+            user.setId(resultSet.getInt("id"));
+            user.setName(resultSet.getString("name"));
+            user.setLastName(resultSet.getString("lastName"));
+            user.setbYear(resultSet.getInt("bYear"));
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
     }
     public void save(User user) {
-//        user.setId(++USER_COUNT);
-//        users.add(user);
-        try {
-            Statement statement = connection.createStatement();
-            String SQL = "INSERT INTO users VALUES(" + 1 + ",'" + user.getName() +
-                    "'," + user.getLastName() + ",'" + user.getbYear() + "')";
 
-            statement.executeUpdate(SQL);
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("INSERT INTO users VALUES(1,?,?,?)");
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getLastName());
+            preparedStatement.setInt(3, user.getbYear());
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void update(int id, User updatedUser) {
-//        User userToBeUpdated = show(id);
-//        userToBeUpdated.setName(updatedUser.getName());
-//        userToBeUpdated.setLastName(updatedUser.getLastName());
-//        userToBeUpdated.setbYear(updatedUser.getbYear());
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("UPDATE user SET name=?, age=?, email=? WHERE id=?");
+            preparedStatement.setString(1, updatedUser.getName());
+            preparedStatement.setString(2, updatedUser.getLastName());
+            preparedStatement.setInt(3, updatedUser.getbYear());
+            preparedStatement.setInt(4, id);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     public void delete(int id) {
     //    users.removeIf(u->u.getId()==id);
