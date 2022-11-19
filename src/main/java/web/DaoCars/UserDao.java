@@ -90,18 +90,26 @@ public class UserDao {
     public void update(int id, User updatedUser) {
         try {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("UPDATE user SET name=?, age=?, email=? WHERE id=?");
+                    connection.prepareStatement("UPDATE users SET name=?, lastName=?, bYear=? WHERE id=?");
             preparedStatement.setString(1, updatedUser.getName());
             preparedStatement.setString(2, updatedUser.getLastName());
             preparedStatement.setInt(3, updatedUser.getbYear());
             preparedStatement.setInt(4, id);
-
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
     public void delete(int id) {
-    //    users.removeIf(u->u.getId()==id);
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement("DELETE FROM users WHERE id=?");
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+           e.printStackTrace();
+        }
+
     }
 
 }
