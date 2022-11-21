@@ -1,21 +1,24 @@
 package web.model;
 
 
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-
+@Entity
+@Table(name = "users")
 public class User {
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @NotEmpty(message = "Name shoud not be empty")
-    @Size(min = 2, max = 30, message = "Name Error")
+    @Column(name = "name")
     private String name;
-    @NotEmpty(message = "LastName shoud not be empty")
-    @Size(min = 2, max = 30, message = "LastName Error")
+
+    @Column(name = "lastName")
     private String lastName;
-    @Min(value = 0, message = "Year Error")
+    @Column(name = "bYear")
     private int bYear;
 
     public User() {

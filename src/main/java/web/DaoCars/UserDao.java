@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.util.List;
 
 @Component
-public class UserDao {
+public class UserDao implements UserDaoInt{
     private static int USER_COUNT;
     private static final String URL = "jdbc:mysql://localhost:3307/task231";
     private static String USERNAME = "root";
