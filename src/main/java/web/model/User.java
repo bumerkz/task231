@@ -10,8 +10,8 @@ import javax.validation.constraints.Size;
 @Table(name = "users")
 public class User {
     @Id
-    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private int id;
     @Column(name = "name")
     private String name;
@@ -24,8 +24,7 @@ public class User {
     public User() {
     }
 
-    public User(int id, String name, String lastName, int bYear) {
-        this.id = id;
+    public User(String name, String lastName, int bYear) {
         this.name = name;
         this.lastName = lastName;
         this.bYear = bYear;
