@@ -30,6 +30,7 @@ public class UserServiceImp implements UserService {
 
     }
     @Override
+    @Transactional(readOnly = true)
     public User show(int id) {
         return userDaoInt.show(id);
     }

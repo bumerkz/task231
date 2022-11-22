@@ -19,12 +19,12 @@ public class UserDao implements UserDaoInt{
     }
 
     public List<User> index() {
-        TypedQuery<User> query = entityManager.createQuery("from users", User.class);
+        TypedQuery<User> query = entityManager.createQuery("SELECT user from User user", User.class);
         return query.getResultList();
     }
 
     public User show(int id) {
-        TypedQuery<User> query = entityManager.createQuery("from users where id=:i", User.class);
+        TypedQuery<User> query = entityManager.createQuery("SELECT user from User user where id=:i", User.class);
         query.setParameter("i", id);
         return query.getSingleResult();
     }
