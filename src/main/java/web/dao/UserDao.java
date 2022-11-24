@@ -1,13 +1,13 @@
-package web.DaoCars;
+package web.dao;
 
 import web.model.User;
 
 import java.util.List;
 
-public interface UserDaoInt {
-    List<User> index();
+public interface UserDao {
+    List<User> getAllUsers();
     User show(int id);
     void save(User user);
-    void update(int id, User updatedUser);
+    void update(User updatedUser);
     void delete(int id);
 }

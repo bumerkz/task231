@@ -12,7 +12,7 @@ import web.services.UserService;
 //@RequestMapping("/users")
 @Controller
 public class UserController {
-    //private final UserDao userDao;
+    //private final UserDaoImpl userDao;
     private final UserService userService;
     @Autowired
     public UserController(UserService userService) {
@@ -27,7 +27,7 @@ public class UserController {
 
     @GetMapping("/users")
     public String index(Model model) {
-        model.addAttribute("users", userService.index());
+        model.addAttribute("users", userService.getAllUsers());
         return "users";
     }
     @GetMapping("/new")
@@ -56,7 +56,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "edit";
         }
-        userService.update(id, user);
+        userService.update(user);
         return "redirect:/users";
     }
     @GetMapping("{id}")
